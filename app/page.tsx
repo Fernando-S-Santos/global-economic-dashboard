@@ -1,65 +1,129 @@
-import Image from "next/image";
+"use client";
+
+import GDPChart from "@/components/GDPChart";
+import { useState } from "react";
+import { globalData } from "@/data/globalData";
+import RankingTable from "@/components/RankingTable";
+import GlobalSummary from "@/components/GlobalSummary";
+import TopCountryHighlight from "@/components/TopCountryHighlight";
 
 export default function Home() {
+  const [selectedYear, setSelectedYear] = useState(2023);
+
+  const [selectedIndicator, setSelectedIndicator] = useState("gdp");
+
+  const years = Array.from(new Set(globalData.map(item => item.year)));
+
+  const filteredData = globalData.filter(
+    item => item.year === selectedYear
+  );
+
+  const rankedData = [...filteredData].sort((a, b) => {
+  const valueA = Number(a[selectedIndicator as keyof typeof a]);
+  const valueB = Number(b[selectedIndicator as keyof typeof b]);
+
+    return valueB - valueA;
+  });
+
+  const topCountry = rankedData[0];
+
+  const averageValue =
+    filteredData.reduce((acc, item) => {
+      return acc + Number(item[selectedIndicator as keyof typeof item]);
+    }, 0) / filteredData.length;
+
+  const averageUnemployment =
+    filteredData.reduce((acc, item) => acc + item.unemployment, 0) /
+    filteredData.length;
+
+  const averageInflation =
+    filteredData.reduce((acc, item) => acc + item.inflation, 0) /
+    filteredData.length;
+
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+    <main className="min-h-screen bg-slate-950 text-white p-10 max-w-7xl mx-auto">
+      <h1 className="text-3xl font-bold text-blue-500 mb-4">
+        🌍 Global Economic Indicators
+      </h1>
+
+      <p className="text-slate-400 mb-8">
+        Comparative analysis of GDP, unemployment and inflation rates.
+      </p>
+
+      {/* Filtro Ano */}
+      <div className="mb-8">
+        <select
+          value={selectedYear}
+          onChange={(e) => setSelectedYear(Number(e.target.value))}
+          className="bg-slate-900 border border-slate-700 p-2 rounded-md"
+        >
+          {years.map((year) => (
+            <option key={year} value={year}>
+              {year}
+            </option>
+          ))}
+        </select>
+      </div>
+      {/* Filtro Indicador */}
+      <div className="mb-8">
+        <select
+          value={selectedIndicator}
+          onChange={(e) => setSelectedIndicator(e.target.value)}
+          className="bg-slate-900 border border-slate-700 p-2 rounded-md"
+        >
+          <option value="gdp">GDP</option>
+          <option value="unemployment">Unemployment</option>
+          <option value="inflation">Inflation</option>
+        </select>
+      </div>
+
+      {/* Tabela Simples */}
+      <div className="bg-slate-900 rounded-xl border border-slate-800 p-6">
+        <h2 className="text-lg font-semibold mb-4 text-blue-400">
+          Economic Data ({selectedYear})
+        </h2>
+
+        <table className="w-full text-left">
+          <thead className="text-slate-400 border-b border-slate-800">
+            <tr>
+              <th className="py-2">Country</th>
+              <th>GDP (Billion USD)</th>
+              <th>Unemployment (%)</th>
+              <th>Inflation (%)</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredData.map((item) => (
+              <tr key={item.country} className="border-b border-slate-800">
+                <td className="py-2">{item.country}</td>
+                <td>{item.gdp}</td>
+                <td>{item.unemployment}</td>
+                <td>{item.inflation}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <GDPChart data={filteredData} />
+      <RankingTable data={rankedData} />
+      <GlobalSummary
+        gdp={averageValue}
+        unemployment={averageUnemployment}
+        inflation={averageInflation}
+      />
+      <TopCountryHighlight
+        country={topCountry.country}
+        gdp={topCountry.gdp}
+      />
+      <p className="text-slate-300 mt-2">
+        Média de {selectedIndicator.toUpperCase()}:{" "}
+        {averageValue.toLocaleString()}{" "}
+        {selectedIndicator === "gdp" && "Billion USD"}
+        {selectedIndicator === "unemployment" && "%"}
+        {selectedIndicator === "inflation" && "%"}
+      </p>
+    </main>
   );
 }
+

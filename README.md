@@ -1,36 +1,80 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🌍 Global Economic Dashboard
 
-## Getting Started
+Interactive dashboard built with **Next.js + TypeScript + Recharts** to analyze and compare global economic indicators.
 
-First, run the development server:
+## 🚀 Live Demo
+(After deployment, paste your Vercel link here)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+---
+
+## 📊 Features
+
+- Year filter
+- Indicator filter (GDP, Unemployment, Inflation)
+- Dynamic ranking system
+- Top country highlight
+- Average calculation
+- Interactive charts
+- Responsive layout
+- Dark modern UI
+
+---
+
+## 🛠 Tech Stack
+
+- Next.js 14
+- TypeScript
+- Recharts
+- Tailwind CSS
+
+---
+
+## 🎯 Purpose
+
+This project demonstrates:
+
+- Data manipulation & transformation
+- Dynamic UI updates
+- Type-safe state management
+- Interactive data visualization
+- Clean project architecture
+
+---
+
+## 📂 Project Structure
+
+```
+app/
+components/
+data/
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🧠 What I Focused On
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Writing clean and readable code
+- Creating dynamic reusable logic
+- Making the dashboard scalable
+- Building with production-ready patterns
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## ▶️ Run Locally
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+npm install
+npm run dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Access:
+```
+http://localhost:3000
+```
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 👨‍💻 Author
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Fernando S. Santos  
+Data & Analytics Enthusiastc
