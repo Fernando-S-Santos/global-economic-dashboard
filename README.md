@@ -3,7 +3,7 @@
 Interactive dashboard built with **Next.js + TypeScript + Recharts** to analyze and compare global economic indicators.
 
 ## 🚀 Live Demo
-(After deployment, paste your Vercel link here)
+https://globaleconomicdashboard.vercel.app/
 
 ---
 
